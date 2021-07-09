@@ -1,13 +1,13 @@
 В файле окружения ('./.env') необходимо заменить строки:    
 <code>    
-APP_URL=http://0.0.0.0:8040    
+APP_URL=http://0.0.0.0:8040      <br />
 
-DB_CONNECTION=mysql    
-DB_HOST=db    
-DB_PORT=3306    
-DB_DATABASE=regiontorg    
-DB_USERNAME=root    
-DB_PASSWORD=password    
+DB_CONNECTION=mysql    <br />
+DB_HOST=db      <br />
+DB_PORT=3306      <br />
+DB_DATABASE=regiontorg      <br />
+DB_USERNAME=root      <br />
+DB_PASSWORD=password      <br />
     </code>
     
 Запуск:    
