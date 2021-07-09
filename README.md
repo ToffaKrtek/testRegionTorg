@@ -1,25 +1,25 @@
 В файле окружения ('./.env') необходимо заменить строки:    
 <code>    
-APP_URL=http://0.0.0.0:8040      <br />
- </code>
+APP_URL=http://0.0.0.0:8040     
+ </code>    
 <code>    
 DB_CONNECTION=mysql    <br />
- </code>
+ </code>    
 <code>    
 DB_HOST=db      <br />
- </code>
+ </code>    
 <code>    
 DB_PORT=3306      <br />
- </code>
+ </code>    
 <code>    
 DB_DATABASE=regiontorg      <br />
- </code>
+ </code>    
 <code>    
 DB_USERNAME=root      <br />
- </code>
+ </code>    
 <code>    
 DB_PASSWORD=password      <br />
-    </code>
+    </code>    
     
 Запуск:    
 <code>docker-compose up    </code>
