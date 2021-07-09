@@ -1,0 +1,77 @@
+version: '3'
+
+# Надо вынести раскидать все по подпапкам - само приложение в src
+services: 
+    # PHP
+    app:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        image: php:7.3-fpm
+        container_name: app
+        restart: unless-stopped
+        tty: true
+        environment: 
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www
+        volumes: 
+            - ./:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks: 
+            - app-network
+    
+    # Nginx http://localhost:8040/
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
+        # Порты наверное тоже надо сбросить в файл с конфигами для удобства
+        ports: 
+            - "8040:80"
+            - "8443:443"
+        volumes: 
+            - ./:/var/www
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        networks: 
+            - app-network
+    
+    # MySQL
+    db:
+        image: mysql
+        container_name: db
+        restart: unless-stopped
+        tty: true
+        ports: 
+            - "3309:3306"
+        #Мб кинуть в файл с конфигами - брать как переменную
+        environment: 
+            MYSQL_DATABASE: regiontorg
+            MYSQL_ROOT_PASSWORD: password 
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes: 
+            - dbdata:/vat/lib/mysql/
+            - ./mysql/my.cnf:/etc/mysql/my.cnf
+        command: 
+            - --character-set-server=utf8  #Решение проблемы с запуском 8-ой версии MySQL
+            - --default-authentication-plugin=mysql_native_password
+        networks: 
+            - app-network
+    # Админка для БД http://localhost:8060/
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - "8060:8080"
+        networks: 
+            - app-network
+# NEtwork
+networks: 
+    app-network:
+        driver: bridge
+# для БД
+volumes: 
+    dbdata:
+        driver: local
